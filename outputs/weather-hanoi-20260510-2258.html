@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thời Tiết — {{city}}, {{country}}</title>
+  <title>Thời Tiết — Hà Nội, VN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -248,20 +248,20 @@
 
   <!-- Header -->
   <div class="card card-header" id="card-header">
-    <div class="city" id="val-city">{{city}}, {{country}}</div>
-    <div class="updated" id="val-updated">Cập nhật lúc {{updated_at}}</div>
+    <div class="city" id="val-city">Hà Nội, VN</div>
+    <div class="updated" id="val-updated">Cập nhật lúc 10/05/2026 22:51</div>
   </div>
 
   <!-- Current conditions -->
   <div class="card" id="card-current">
     <div class="current-top">
       <div class="temp-block">
-        <div class="temp-main" id="val-temp">{{temp}}<span style="font-size:32px;font-weight:400">°C</span></div>
-        <div class="temp-feels" id="val-feels">Cảm giác như {{feels_like}}°C</div>
-        <div class="temp-range" id="val-range">Cao {{temp_max}}° · Thấp {{temp_min}}°</div>
+        <div class="temp-main" id="val-temp">25<span style="font-size:32px;font-weight:400">°C</span></div>
+        <div class="temp-feels" id="val-feels">Cảm giác như 25°C</div>
+        <div class="temp-range" id="val-range">Cao 25° · Thấp 25°</div>
       </div>
       <div class="desc-block">
-        <div class="description" id="val-desc">{{description}}</div>
+        <div class="description" id="val-desc">Mây đen u ám</div>
       </div>
     </div>
 
@@ -271,46 +271,46 @@
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v7a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M12 13v5"/></svg>
           Độ ẩm
         </div>
-        <div class="stat-value" id="val-humidity">{{humidity}}<span class="stat-unit">%</span></div>
+        <div class="stat-value" id="val-humidity">81<span class="stat-unit">%</span></div>
       </div>
       <div class="stat">
         <div class="stat-label">
           <svg class="icon" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
           Tốc độ gió
         </div>
-        <div class="stat-value" id="val-wind">{{wind_speed}}<span class="stat-unit">m/s {{wind_dir}}</span></div>
+        <div class="stat-value" id="val-wind">1.6<span class="stat-unit">m/s Tây</span></div>
       </div>
       <div class="stat">
         <div class="stat-label">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z"/></svg>
           Tầm nhìn
         </div>
-        <div class="stat-value" id="val-visibility">{{visibility}}<span class="stat-unit">km</span></div>
+        <div class="stat-value" id="val-visibility">10.0<span class="stat-unit">km</span></div>
       </div>
       <div class="stat">
         <div class="stat-label">
           <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           Áp suất
         </div>
-        <div class="stat-value" id="val-pressure">{{pressure}}<span class="stat-unit">hPa</span></div>
+        <div class="stat-value" id="val-pressure">1014<span class="stat-unit">hPa</span></div>
       </div>
       <div class="stat">
         <div class="stat-label">
           <svg class="icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           Mây che phủ
         </div>
-        <div class="stat-value" id="val-clouds">{{clouds}}<span class="stat-unit">%</span></div>
+        <div class="stat-value" id="val-clouds">100<span class="stat-unit">%</span></div>
       </div>
     </div>
 
     <div class="sun-bar">
       <div style="display:flex;align-items:center;gap:8px">
         <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        Mọc lúc <span id="val-sunrise">{{sunrise}}</span>
+        Mọc lúc <span id="val-sunrise">05:21</span>
       </div>
       <div style="height:1px;flex:1;background:var(--color-primary);opacity:.3;margin:0 12px"></div>
       <div style="display:flex;align-items:center;gap:8px">
-        Lặn lúc <span id="val-sunset">{{sunset}}</span>
+        Lặn lúc <span id="val-sunset">18:24</span>
         <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/></svg>
       </div>
     </div>
@@ -320,14 +320,16 @@
   <div class="card" id="card-forecast">
     <div class="section-title">Dự báo các ngày tới</div>
     <div class="forecast-list" id="forecast-list">
-      {{forecast_rows}}
+      <div class="forecast-row"><span class="forecast-date">11/05/2026</span><span class="forecast-desc">Mây đen u ám</span><span class="forecast-temps">31° <span class="t-min">/ 24°</span></span><span class="forecast-pop pop-high">100%</span></div>
+<div class="forecast-row"><span class="forecast-date">12/05/2026</span><span class="forecast-desc">Mưa nhẹ</span><span class="forecast-temps">32° <span class="t-min">/ 24°</span></span><span class="forecast-pop pop-high">100%</span></div>
+<div class="forecast-row"><span class="forecast-date">13/05/2026</span><span class="forecast-desc">Mây đen u ám</span><span class="forecast-temps">35° <span class="t-min">/ 25°</span></span><span class="forecast-pop pop-med">24%</span></div>
     </div>
   </div>
 
   <!-- Summary -->
   <div class="card" id="card-summary">
     <div class="section-title">Tóm tắt</div>
-    <div class="summary-box" id="val-summary">{{summary}}</div>
+    <div class="summary-box" id="val-summary">Thời tiết tại Hà Nội: mây đen u ám, nhiệt độ 25°C (cảm giác như 25°C). ⚠️ Khả năng mưa lên đến 100% trong vài ngày tới — nhớ mang theo ô!</div>
   </div>
 
   <!-- Footer -->
