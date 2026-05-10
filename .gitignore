@@ -1,0 +1,7 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Báo cáo thời tiết được tạo tự động — không commit
+outputs/weather-*.md

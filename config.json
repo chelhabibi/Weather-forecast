@@ -1,0 +1,20 @@
+{
+  "api": {
+    "key": "YOUR_OPENWEATHERMAP_API_KEY_HERE",
+    "base_url": "https://api.openweathermap.org/data/2.5",
+    "units": "metric",
+    "language": "vi"
+  },
+  "location": {
+    "default_city": "Hanoi"
+  },
+  "forecast": {
+    "slots": 8,
+    "interval_hours": 3
+  },
+  "output": {
+    "folder": "outputs",
+    "keep_last_n_files": 10,
+    "filename_prefix": "weather"
+  }
+}

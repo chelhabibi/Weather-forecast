@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thời Tiết — {{city}}, {{country}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Color tokens ─────────────────────────────────────── */
+    :root {
+      --color-bg:          #F0F9FF;
+      --color-surface:     #FFFFFF;
+      --color-border:      #E2E8F0;
+      --color-primary:     #0284C7;
+      --color-primary-dim: #E0F2FE;
+      --color-text:        #0F172A;
+      --color-text-muted:  #64748B;
+      --color-warn:        #DC2626;
+      --color-warn-dim:    #FEE2E2;
+      --color-ok:          #16A34A;
+      --color-ok-dim:      #DCFCE7;
+      --shadow-card:       0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --radius:            12px;
+    }
+
+    /* ── Reset & base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100dvh;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── Card ─────────────────────────────────────────────── */
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      padding: 24px;
+    }
+
+    /* ── Header card ──────────────────────────────────────── */
+    .card-header {
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .card-header .city {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .card-header .updated {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    /* ── Current weather ──────────────────────────────────── */
+    .current-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .temp-block .temp-main {
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-primary);
+      letter-spacing: -2px;
+    }
+    .temp-block .temp-feels {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+    .temp-block .temp-range {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+    .desc-block {
+      text-align: right;
+    }
+    .desc-block .description {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    /* ── Stats grid ───────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .stat {
+      background: var(--color-bg);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .stat-unit {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      margin-left: 2px;
+    }
+
+    /* ── Sun bar ──────────────────────────────────────────── */
+    .sun-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-primary-dim);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+    .sun-bar svg { flex-shrink: 0; }
+
+    /* ── Section title ────────────────────────────────────── */
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--color-text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* ── Forecast list ────────────────────────────────────── */
+    .forecast-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .forecast-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .forecast-row:last-child { border-bottom: none; }
+    .forecast-date {
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 100px;
+    }
+    .forecast-desc {
+      flex: 1;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      padding: 0 12px;
+    }
+    .forecast-temps {
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 90px;
+      text-align: right;
+    }
+    .forecast-temps .t-min { color: var(--color-text-muted); font-weight: 400; }
+    .forecast-pop {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+      min-width: 44px;
+      text-align: center;
+      margin-left: 12px;
+    }
+    .pop-high { background: var(--color-warn-dim); color: var(--color-warn); }
+    .pop-med  { background: #FEF9C3; color: #854D0E; }
+    .pop-low  { background: var(--color-ok-dim); color: var(--color-ok); }
+
+    /* ── Summary ──────────────────────────────────────────── */
+    .summary-box {
+      background: var(--color-primary-dim);
+      border-left: 3px solid var(--color-primary);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .temp-block .temp-main { font-size: 48px; }
+      .forecast-desc { display: none; }
+    }
+
+    /* ── SVG icons ────────────────────────────────────────── */
+    .icon { width: 14px; height: 14px; stroke: currentColor; fill: none;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="card card-header">
+    <div class="city">{{city}}, {{country}}</div>
+    <div class="updated">Cập nhật lúc {{updated_at}}</div>
+  </div>
+
+  <!-- Current conditions -->
+  <div class="card">
+    <div class="current-top">
+      <div class="temp-block">
+        <div class="temp-main">{{temp}}<span style="font-size:32px;font-weight:400">°C</span></div>
+        <div class="temp-feels">Cảm giác như {{feels_like}}°C</div>
+        <div class="temp-range">Cao {{temp_max}}° · Thấp {{temp_min}}°</div>
+      </div>
+      <div class="desc-block">
+        <div class="description">{{description}}</div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-label">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v7a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/><path d="M12 13v5"/></svg>
+          Độ ẩm
+        </div>
+        <div class="stat-value">{{humidity}}<span class="stat-unit">%</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+          Tốc độ gió
+        </div>
+        <div class="stat-value">{{wind_speed}}<span class="stat-unit">m/s {{wind_dir}}</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5z"/></svg>
+          Tầm nhìn
+        </div>
+        <div class="stat-value">{{visibility}}<span class="stat-unit">km</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          Áp suất
+        </div>
+        <div class="stat-value">{{pressure}}<span class="stat-unit">hPa</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          Mây che phủ
+        </div>
+        <div class="stat-value">{{clouds}}<span class="stat-unit">%</span></div>
+      </div>
+    </div>
+
+    <div class="sun-bar">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        Mọc lúc {{sunrise}}
+      </div>
+      <div style="height:1px;flex:1;background:var(--color-primary);opacity:.3;margin:0 12px"></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        Lặn lúc {{sunset}}
+        <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forecast -->
+  <div class="card">
+    <div class="section-title">Dự báo các ngày tới</div>
+    <div class="forecast-list">
+      {{forecast_rows}}
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="card">
+    <div class="section-title">Tóm tắt</div>
+    <div class="summary-box">{{summary}}</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Nguồn dữ liệu: OpenWeatherMap API &nbsp;·&nbsp; Daily-Weather-Brief v1.0.0
+  </div>
+
+</div>
+</body>
+</html>
